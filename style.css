@@ -55,17 +55,13 @@ body {
 	visibility: hidden;
 }
 
-.fireballCard,
-.biteCard {
+.attack1Card,
+.attack2Card {
 	height: 100%;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.fireballCard,
-.biteCard {
 	border-right: 1px solid black;
 	width: calc((100% / 3) - 1px);
 }
@@ -88,8 +84,8 @@ body {
 	align-items: center;
 }
 
-.fireballCard:hover,
-.biteCard:hover {
+.attack1Card:hover,
+.attack2Card:hover {
 	background-color: rgba(0, 210, 0, 0.1);
 	cursor: pointer;
 }

@@ -1,4 +1,8 @@
 window.addEventListener('keydown', (event) => {
+	if (!firstMusicStart) {
+		mapMusic.play()
+		firstMusicStart = true
+	}
 	switch(event.code) {
 		case "KeyA":
 			keys.KeyA.pressed = true
@@ -48,21 +52,25 @@ window.addEventListener('keyup', (event) => {
 
 window.addEventListener('click', (event) => {
 	if (!draggle.isAttacking) {
-		switch(event.target.dataset.id) {
-			case "fireballCard":
-				draggle.isAttacking = true
-				draggle.attack({ 
-					attack: attacks.Fireball,
-					recipient: emby
-				})
-				break
-
-			case "biteCard":
+		switch(event.target.dataset.name) {
+			case "Bite":
 				emby.isAttacking = true
 				emby.attack({ 
 					attack: attacks.Bite,
 					recipient: draggle
 				})
+
+				addingToEnemyQueue(draggle)
+				break
+
+			case "Fireball":
+				emby.isAttacking = true
+				emby.attack({ 
+					attack: attacks.Fireball,
+					recipient: draggle
+				})
+
+				addingToEnemyQueue(draggle)
 				break
 
 			default: break	
@@ -77,11 +85,8 @@ const mouse = {
 	}
 }
 
-const fireballCard = document.querySelector(".fireballCard")
-const biteCard = document.querySelector(".biteCard")
-
 window.addEventListener("mousemove", (event) => {
-	if (event.path[0] === fireballCard) attackType.innerHTML = "Fire"
-	else if (event.path[0] === biteCard) attackType.innerHTML = "Physical"
+	if (event.path[0] === attack1Card) attackType.innerHTML = attack1Card.dataset.type
+	else if (event.path[0] === attack2Card) attackType.innerHTML = attack2Card.dataset.type
 	else attackType.innerHTML = " "
 })

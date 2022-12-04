@@ -50,3 +50,39 @@ function rectangularCollisionMiddleY(object1, object2) {
 		object1.center.y <= object2.position.y + object2.height
 	)
 }
+
+function showBattleMessage(message) {
+	battleMessagesCard.style.visibility = "visible"
+	battleMessagesCard.innerHTML = message
+
+	setTimeout(() => {
+		battleMessagesCard.style.visibility = "hidden"
+		battleMessagesCard.innerHTML = " "
+
+		detectDeath()
+		if (enemyActionsQueue.length > 0) {
+			enemyActionsQueue[0]()
+			enemyActionsQueue.shift()
+		}
+	}, 3000)
+}
+
+function addingToEnemyQueue(pet) {
+	let attackTemp = {}
+	if (pet.attacks.length > 1) {
+		const random = Math.floor(Math.random() * 10)
+		if (random < 6) attackTemp = pet.attacks[0]
+		else attackTemp = pet.attacks[1]
+	}
+	else attackTemp = pet.attacks[1]
+
+	console.log(attackTemp)
+
+	enemyActionsQueue.push(() => {
+		draggle.isAttacking = true
+		draggle.attack({
+			attack: attackTemp,
+			recipient: emby
+		})
+	})
+}

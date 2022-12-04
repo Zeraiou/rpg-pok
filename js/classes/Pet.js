@@ -1,13 +1,19 @@
 class Pet extends Sprite {
-	constructor({ position, image, visible = true }) {
+	constructor({ position, image, visible = true, name, attacks }) {
 		super({ position, image, visible })
 		this.health = 100
 		this.isAttacking = false
-
+		this.name = name
+		this.isDiying = false
+		this.attacks = attacks
 	}
 
 	attack({attack, recipient}) {
-		// attackType.innerHTML = attack.type		
+		let messageTemp
+		messageTemp = this.name + " is attacking " + recipient.name + " with " + attack.name + " for " + attack.damage + " damages."
+
+		if (recipient.health - attack.damage <= 0) messageTemp += "<br><br><br>" + recipient.name + " died!"
+		showBattleMessage(messageTemp)
 
 		if (attack.name === "Bite") {
 			this.biteAnimation(this, recipient, attack.damage)
@@ -72,6 +78,7 @@ class Pet extends Sprite {
 			x: giver.position.x + stepMovement.x2,
 			duration: 0.1,
 			onComplete() {
+				hitBite.play()
 				giver.bitedAnimation(recipient, giver, damage)
 			}
 		}).to(giver.position, {
@@ -119,6 +126,7 @@ class Pet extends Sprite {
 			y: giver.position.y + stepMovement.y2,
 			duration: 0.1,
 			onComplete() {
+				launchFireball.play()
 				giver.fireballAnimation(giver, recipient, damage)
 			}
 		}).to(giver.position, {
@@ -167,6 +175,7 @@ class Pet extends Sprite {
 			duration: 0.8,
 			onComplete() {
 				fireBall.visible = false
+				hitFireball.play()
 				giver.fireballHitAnimation(giver, recipient, damage)
 			}
 		})

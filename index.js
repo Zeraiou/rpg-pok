@@ -9,6 +9,11 @@ const enemyDisplay = document.querySelector(".enemyDisplay")
 const attackType = document.getElementById("attackType")
 const enemyHealth = document.getElementById("enemyHealth")
 const playerHealth = document.getElementById("playerHealth")
+const battleMessagesCard = document.getElementById("battleMessagesCard")
+const attack1Card = document.querySelector(".attack1Card")
+const attack2Card = document.querySelector(".attack2Card")
+
+let firstMusicStart = false
 
 let mapInterval = null
 let battleInterval = null
@@ -62,33 +67,9 @@ const battleBackground = new Sprite({
 	}
 })
 
-const draggle = new Pet({
-	position: {
-		x: 800,
-		y: 100,
-	},
-	image: {
-		imageSrc: './assets/images/draggleSprite.png',
-		frameRate: 4,
-		frameBuffer: 17,
-		loop: true,
-		autoplay: true,
-	}
-})
+const draggle = new Pet(pets.draggle)
 
-const emby = new Pet({
-	position: {
-		x: 310,
-		y: 320,
-	},
-	image: {
-		imageSrc: './assets/images/embySprite.png',
-		frameRate: 4,
-		frameBuffer: 14,
-		loop: true,
-		autoplay: true,
-	}
-})
+const emby = new Pet(pets.emby)
 
 const fireBall = new Sprite({
 	position: {
@@ -336,6 +317,10 @@ function detectBattleZones() {
 
 	if (battleActivationFrame === randomBattleActivationTrigger) {
 		player.canMove = false
+		mapMusic.pause()
+		mapMusic.currentTime = 0
+		initBattle.volume = 0.4
+		initBattle.play()
 		window.cancelAnimationFrame(mapInterval)
 		gsap.to(blackScreen, {
 			opacity: 1,
@@ -352,6 +337,14 @@ function detectBattleZones() {
 							duration: 0.7,
 						})
 						animateBattle()
+						battleMusic.volume = 0.8
+						battleMusic.play()
+						attack1Card.innerHTML = emby.attacks[0].name
+						attack1Card.dataset.name = emby.attacks[0].name
+						attack1Card.dataset.type = emby.attacks[0].type
+						attack2Card.innerHTML = emby.attacks[1].name
+						attack2Card.dataset.name = emby.attacks[1].name
+						attack2Card.dataset.type = emby.attacks[1].type
 						enemyDisplay.style.visibility = "visible"
 						playerDisplay.style.visibility = "visible"
 						battleOptionsCard.style.visibility = "visible"
@@ -367,88 +360,16 @@ function setRandom(min, max) {
 	return Math.floor((Math.random() * max) + min)
 }
 
-function animateBattleSequence() {
-	drawBattleBackground()
-	draggle.updateFrames()
-	if (fireBall.visible) fireBall.updateFrames()
-	emby.updateFrames()
-	updateHealthBar()
-	detectDeath()
-}
-
-function drawBattleBackground() {
-	battleBackground.draw()
-}
-
 function setPetName() {
-	document.getElementById("enemyName").innerHTML = "Draggle"
-	document.getElementById("playerName").innerHTML = "Emby"
+	document.getElementById("enemyName").innerHTML = draggle.name
+	document.getElementById("playerName").innerHTML = emby.name
 }
 
-function updateHealthBar() {
-	if (draggle.health < 0) draggle.health = 0
-	if (emby.health < 0) emby.health = 0
-
-	if (emby.health === 100) playerHealth.style.width = emby.health + "%" 
-	else {
-		gsap.to(playerHealth, {
-			width: emby.health + "%"
-		})
-	}
-
-	if (draggle.health === 100) enemyHealth.style.width = draggle.health + "%" 
-	else {
-		gsap.to(enemyHealth, {
-			width: draggle.health + "%"
-		})
-	}
+function gameInit() {
+	setPetName()
+	animateMap()
 }
 
-function detectDeath() {
-	if (draggle.health === 0) {
-		gsap.to(draggle, {
-			opacity: 0,
-			duration: 1,
-		})
-	}	
-
-	if (emby.health === 0) {
-		gsap.to(emby, {
-			opacity: 0,
-			duration: 1,
-		})
-	}
-
-	if (draggle.health === 0 || emby.health === 0) {
-		setTimeout(() => {
-			switchToMap()
-		}, 3000)
-	}
-}
-
-function switchToMap() {
-	randomBattleActivationTrigger = setRandom(100, 300)
-	battleActivationFrame = 0
-	window.cancelAnimationFrame(battleInterval)
-
-	const timeline = gsap.timeline()
-	timeline.to(blackScreen, {
-		opacity: 1,
-		// onComplete() {
-		// 	enemyDisplay.style.visibility = "hidden"
-		// 	playerDisplay.style.visibility = "hidden"
-		// 	battleOptionsCard.style.visibility = "hidden"
-		// 	animateMap()
-		// 	emby.health = 100
-		// 	draggle.health = 100
-		// }
-	}).to(blackScreen, {
-		opacity: 0,
-		// onComplete() {
-		// 	player.canMove = true
-		// }
-	})
-}
-
-animateMap()
-setPetName()
+window.addEventListener("load", () => {
+	gameInit()
+})
