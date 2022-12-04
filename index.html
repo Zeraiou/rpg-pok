@@ -4,12 +4,63 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 	<title>Pokemon Game</title>
 </head>
 <body>
 	<div class="pageContent">
-		<canvas></canvas>
+		<div class="gameCard"> 
+			
+			<div class="enemyDisplay">
+				<div class="enemyNameCard">
+					<div class="nameDisplay">Name :</div>
+					<div id="enemyName"></div>
+				</div>
+				<div class="enemyHealthCard">
+					<div class="healthDisplay">Health :</div> 
+					<div class="healthCard">
+						<div class="healthBackground"></div>
+						<div id="enemyHealth"></div>
+					</div>
+				</div>
+			</div>
+			<div class="playerDisplay">
+				<div class="playerNameCard">
+					<div class="nameDisplay">Name :</div>
+					<div id="playerName"></div>
+				</div>
+				<div class="playerHealtCard">
+					<div class="healthDisplay">Health :</div> 
+					<div class="healthCard">
+						<div class="healthBackground"></div>
+						<div id="playerHealth"></div>
+					</div>
+				</div>
+			</div>
+			<div class="battleOptionsCard">
+				<div class="fireballCard" data-id="fireballCard">Fireball</div>
+				<div class="biteCard" data-id="biteCard">Bite</div>
+				<div class="attacksCard">
+					<div class="attackTypeDisplay">Attack Type :</div>
+					<div id="attackType"> </div>
+				</div>
+			</div>
+			<div id="battleMessagesCard"></div>
+			<div class="blackScreen"></div>
+			<canvas></canvas>
+		</div>
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/javascript" src="./js/data/mapCollisions.js"></script>
+	<script type="text/javascript" src="./js/data/mapBattleZone.js"></script>
+	<script type="text/javascript" src="./js/data/attacks.js"></script>
+	<script type="text/javascript" src="./js/utilities.js"></script>
+	<script type="text/javascript" src="./js/eventListeners.js"></script>
+	
+	<script type="text/javascript" src="./js/classes/Sprite.js"></script>
+	<script type="text/javascript" src="./js/classes/Player.js"></script>
+	<script type="text/javascript" src="./js/classes/Pet.js"></script>
+
 	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>

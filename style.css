@@ -1,6 +1,8 @@
 * {
 	margin: 0;
 	padding: 0;
+
+	font-family: 'Press Start 2P', cursive;
 }
 
 body {
@@ -13,4 +15,175 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.gameCard {
+	position: absolute;
+	display: inline-block;
+
+	width: 1024px;
+	height: 576px;
+}
+
+.blackScreen {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	background-color: black;
+
+	opacity: 0;
+
+	pointer-events: none;
+}
+
+.battleOptionsCard {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	width: 1024px;
+	height: 149px;
+	border-top: 1px solid black;
+	background-color: whitesmoke;
+
+	display: flex;
+	justify-content: center;
+
+	visibility: hidden;
+}
+
+.fireballCard,
+.biteCard {
+	height: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.fireballCard,
+.biteCard {
+	border-right: 1px solid black;
+	width: calc((100% / 3) - 1px);
+}
+
+.attacksCard {
+	width: calc((100% / 3) + 1px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#attackType,
+.attackTypeDisplay {
+	width: 100%;
+	height: 30%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.fireballCard:hover,
+.biteCard:hover {
+	background-color: rgba(0, 210, 0, 0.1);
+	cursor: pointer;
+}
+
+.enemyDisplay, 
+.playerDisplay {
+	position: absolute;
+
+	width: 300px;
+	height: 100px;
+
+	border: 3px solid black;
+	border-radius: 5px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+
+	background-color: whitesmoke;
+
+	padding-left: 20px;
+}
+
+.enemyNameCard,
+.enemyHealthCard,
+.playerNameCard,
+.playerHealtCard {
+	display: flex;
+}
+
+.enemyDisplay {
+	top: 56px;
+	left: 50px;
+
+	visibility: hidden;
+}
+
+.playerDisplay {
+	top: 273px;
+	left: 650px;
+
+	visibility: hidden;
+}
+
+.nameDisplay,
+.healthDisplay {
+	margin-right: 10px;
+}
+
+#enemyHealth,
+#playerHealth {
+	border: 1px solid black;
+	border-right: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: green;
+
+	position: absolute;
+	top: 0;
+}
+
+.healthBackground {
+	border: 1px solid black;
+	width: 100%;
+	height: 100%;
+
+	background-color: red;
+}
+
+.healthCard {
+	position: relative;
+	width: 150px;
+}
+
+.enemyNameCard,
+.enemyHealthCard,
+.playerNameCard,
+.playerHealthCard {
+	width: 100%;
+}
+
+#battleMessagesCard {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+
+	height: 149px;
+	border-top: 1px solid black;
+	background-color: whitesmoke;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	visibility: hidden;
 }
